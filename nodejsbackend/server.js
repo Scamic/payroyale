@@ -39,7 +39,7 @@ const db = require("./app/models");
 const Role = db.role;
 // .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
 db.mongoose
-  .connect(`mongodb+srv://piyushpatelcodes:Pwjr69osuHjz2utR@cluster0.8dgzd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`, {
+  .connect(`mongodburi/paste/here`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
