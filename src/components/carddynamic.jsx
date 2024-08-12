@@ -87,7 +87,7 @@ export default function Blog() {
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            Highest scoring players
+            Highest scoring Clan in Clash Royale
           </p>
           <div className="mt-4">
             <label htmlFor="fameFilter" className="block text-lg font-medium text-gray-700">
