@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-     <iframe
+      <iframe
         src="https://my.spline.design/tvatimedoor-a1e6e1b6c2cb5d045cc9e8737f30d91f/"
         style={{ width: '100%', height: '100%', border: 'none' }}
         allow="fullscreen"
