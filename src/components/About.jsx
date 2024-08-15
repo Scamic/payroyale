@@ -49,12 +49,12 @@ export default function App() {
         padding: '10px',
         borderRadius: '5px',
       }}>
-        <div  style={{ marginBottom: 60 }}>
+        <div style={{ marginBottom: 60 }}>
           <p>About Devs:</p>
           <p className={animationClass}>PIYUSH PATEL</p><br></br>
           <p className={animationClass}>WACHAN NARKHEDE</p>
         </div>
-     
+
       </div>
     </div>
   );
