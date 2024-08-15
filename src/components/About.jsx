@@ -34,10 +34,12 @@ export default function App() {
 
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-      <spline-viewer
-        url="https://prod.spline.design/pGqp32AzIknjOfuJ/scene.splinecode"
-        style={{ width: '100%', height: '100%', display: 'block' }}
-      ></spline-viewer>
+     <iframe
+        src="https://my.spline.design/tvatimedoor-a1e6e1b6c2cb5d045cc9e8737f30d91f/"
+        style={{ width: '100%', height: '100%', border: 'none' }}
+        allow="fullscreen"
+        title="Spline Scene"
+      ></iframe>
       <div style={{
         position: 'absolute',
         bottom: '10px',
