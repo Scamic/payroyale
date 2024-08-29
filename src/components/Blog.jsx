@@ -51,7 +51,7 @@ const posts = [
         },
       },
       {
-        id: 1,
+        id: 3,
         title: 'Wachan the Great',
         href: '#',
         description:
@@ -74,7 +74,7 @@ const posts = [
         },
       },
       {
-        id: 1,
+        id: 4,
         title: 'Wachan the Great',
         href: '#',
         description:
@@ -97,7 +97,7 @@ const posts = [
         },
       },
       {
-        id: 1,
+        id: 5,
         title: 'Wachan the Great',
         href: '#',
         description:
@@ -120,7 +120,7 @@ const posts = [
         },
       },
       {
-        id: 1,
+        id: 6,
         title: 'Wachan the Great',
         href: '#',
         description:

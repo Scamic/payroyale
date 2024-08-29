@@ -1,8 +1,16 @@
-# React + Vite
+# PAYROYALE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Screenshot_2024-08-11_050427-removebg-preview](https://github.com/user-attachments/assets/06c11539-dccd-40e4-ae57-1d9699fe363b)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Project setup
+```
+npm install
+```
+
+### Run
+```
+node index.js
+```
+### Launching Soon....
+![crbanner](https://github.com/user-attachments/assets/9e0f00e9-fec8-47d9-a44c-8813e87888d7)

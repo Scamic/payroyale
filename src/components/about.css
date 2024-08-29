@@ -1,0 +1,41 @@
+/* Add this CSS to your App.css or directly in a <style> block */
+.gradient-text {
+    display: inline-block;
+    font-size: 24px; /* Adjust size as needed */
+    font-weight: bold;
+    background: linear-gradient(-45deg, #ffc400, #e4db5d, #23A6D5, #23D5AB);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: Gradient 15s ease infinite;
+  }
+  
+  .paused {
+    -webkit-animation-play-state: paused; /* Safari 4.0 - 8.0 */
+    animation-play-state: paused;
+  }
+  
+  @-webkit-keyframes Gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  @keyframes Gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  

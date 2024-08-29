@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PayPal JS SDK Standard Integration</title>
+    <script
+      src="https://www.paypal.com/sdk/js?client-id=BAAGDlJqCpGCdmxGBhqEcGjczIlSP4styfY2-KelK9JeDUtbCVzzdu73H3jy3n68jAzKaDGiPnYcCjc514&amp;components=hosted-buttons&amp;disable-funding=venmo&amp;currency=USD"
+      crossorigin="anonymous"
+      async=""
+    ></script>
+    <script id="react-dotenv" src="./env.js"></script>
+  </head>
+  <body>
+    <!-- Initialize the JS-SDK -->
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        paypal
+          .HostedButtons({
+            hostedButtonId: "LQK3V96859A9L",
+          })
+          .render("#paypal-container-LQK3V96859A9L");
+      });
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>

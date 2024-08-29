@@ -1,0 +1,25 @@
+/* src/components/BattleLog.css */
+.battle-log-card {
+    @apply bg-white shadow-md rounded-lg p-4 mb-4;
+  }
+  
+  .battle-details {
+    @apply flex gap-4;
+  }
+  
+  .team, .opponent {
+    @apply flex-1;
+  }
+  
+  .team-member, .opponent-member {
+    @apply border p-2 mb-2 rounded-lg;
+  }
+  
+  .cards {
+    @apply grid grid-cols-3 gap-2;
+  }
+  
+  .card img {
+    @apply w-16 h-16;
+  }
+  
