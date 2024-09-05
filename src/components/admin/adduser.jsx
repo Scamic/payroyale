@@ -23,12 +23,16 @@ export default function AddUser() {
   const [playersintable, setPlayersintable] = useState([]);
   const [expandedRows, setExpandedRows] = useState({});
 
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
+
   // Function to fetch data from both APIs
   const fetchData = async () => {
     try {
       const [linkedAccountsResponse, battleLogsResponse] = await Promise.all([
-        fetch(`http://localhost:8080/getlinked-accounts`),
-        fetch(`http://localhost:8080/battle-logs`),
+        fetch(`${baseURL}/getlinked-accounts`),
+        fetch(`${baseURL}/battle-logs`),
       ]);
 
       const linkedAccountsData = await linkedAccountsResponse.json();
@@ -80,7 +84,7 @@ export default function AddUser() {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/battle-logs`);
+        const response = await axios.get(`${baseURL}/battle-logs`);
         setPlayers(response.data);
         setTotalPages(Math.ceil(response.data.length / 10)); // Assuming 10 rows per page
       } catch (error) {
@@ -95,7 +99,7 @@ export default function AddUser() {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/test/admin`,
+          `${baseURL}/api/test/admin`,
           { withCredentials: true }
         );
 
@@ -152,7 +156,7 @@ export default function AddUser() {
 
     try {
       await axios.post(
-       `http://localhost:8080/addPlayerAccount`,
+       `${baseURL}/addPlayerAccount`,
         formData,
         {
           withCredentials: true,
@@ -182,7 +186,7 @@ export default function AddUser() {
     setIsUnlinking(true);
 
     try {
-      await axios.delete(`http://localhost:8080/admin/unlinkPlayerAccount`, {
+      await axios.delete(`${baseURL}/admin/unlinkPlayerAccount`, {
         data: formData,
         withCredentials: true,
       });

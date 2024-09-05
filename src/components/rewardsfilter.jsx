@@ -24,11 +24,15 @@ const FilterComponent = ({ filterValues, onFilterValuesChange }) => {
     });
   };
 
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080/'
+  : 'https://payroyale-production.up.railway.app/';
+
   useEffect(() => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/test/admin`,
+          `${baseURL}/api/test/admin`,
           { withCredentials: true }
         );
 

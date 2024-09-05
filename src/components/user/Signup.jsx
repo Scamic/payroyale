@@ -12,6 +12,10 @@ export default function SignUp() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -24,7 +28,7 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      const response = await axios.post(`http://localhost:8080/api/auth/signup`, formData);
+      const response = await axios.post(`${baseURL}/api/auth/signup`, formData);
       alert(response.data.message);
       navigate('/login'); // Redirect to login page after successful signup
     } catch (err) {

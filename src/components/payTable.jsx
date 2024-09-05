@@ -12,6 +12,10 @@ const avatars = [
   '/avatars/avatar6.png',
 ];
 
+const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
+
 const getRandomAvatar = () => avatars[Math.floor(Math.random() * avatars.length)];
 
 const ClashRoyaleTable = () => {
@@ -21,7 +25,7 @@ const ClashRoyaleTable = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/clan-members");
+        const response = await axios.get(`${baseURL}/clan-members`);
         setPlayers(response.data);
       } catch (error) {
         console.error("Error fetching players:", error);

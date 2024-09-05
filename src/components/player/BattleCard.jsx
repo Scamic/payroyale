@@ -8,12 +8,16 @@ const ClashRoyaleCard = ({ playerTag }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
+
   useEffect(() => {
     if (!playerTag) return;
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/battle-data?tag=${playerTag}`);
+        const response = await axios.get(`${baseURL}/api/battle-data?tag=${playerTag}`);
         const parsedData = JSON.parse(response.data.match(/1:(\{.*\})/)[1]);
         setData(parsedData.data);
       } catch (error) {

@@ -29,13 +29,16 @@ export default function Blog() {
     ],
   });
 
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
 
 
   useEffect(() => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/test/admin",
+          `${baseURL}/api/test/admin`,
           { withCredentials: true }
         );
         console.log(response.data)
@@ -54,7 +57,7 @@ export default function Blog() {
       try {
         // Fetching battle logs
        
-        const response = await axios.get("http://localhost:8080/battle-logs");
+        const response = await axios.get(`${baseURL}/battle-logs`);
         const sortedPosts = response.data.sort((a, b) => b.fame - a.fame);
 
         // Fetching paylinks for each player
@@ -63,7 +66,7 @@ export default function Blog() {
             const playerTag = post.playerLink.split("/player/")[1];
             try {
               const response2 = await axios.get(
-                `http://localhost:8080/admin/getplayerpaylink/${playerTag}`
+                `${baseURL}/admin/getplayerpaylink/${playerTag}`
               );
               
               // Check if the paylink exists in the response data

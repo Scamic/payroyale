@@ -31,6 +31,10 @@ export default function Nav() {
   const [roles, setRoles] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
+
   useEffect(() => {
     const fetchUserDataFromSession = () => {
       const userData = sessionStorage.getItem("user");
@@ -48,7 +52,7 @@ export default function Nav() {
       if (cookie) {
         try {
           const response = await axios.get(
-            `http://localhost:8080/api/user/profile`,
+            `${baseURL}/api/user/profile`,
             {
               withCredentials: true,
             }
@@ -72,7 +76,7 @@ export default function Nav() {
   const handleSignOut = async () => {
     try {
       await axios.post(
-        `http://localhost:8080/api/auth/signout`,
+        `${baseURL}/api/auth/signout`,
         {},
         { withCredentials: true }
       );
