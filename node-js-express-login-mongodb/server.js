@@ -9,7 +9,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:5173"], // Frontend URL
+    origin: ["https://payroyale.vercel.app"], // Frontend URL
   })
 );
 /* for Angular Client (withCredentials) */
