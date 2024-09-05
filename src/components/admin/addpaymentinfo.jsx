@@ -21,7 +21,7 @@ export default function Adduser() {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          `${env.REACT_APP_API_ENDPOINT_BASEURL}${env.REACT_APP_API_ENDPOINT_ADMINACCESSCHECK}`,
+          `http://localhost:8080/api/test/admin`,
           { withCredentials: true }
         );
 
@@ -60,7 +60,7 @@ export default function Adduser() {
     setIsSubmitting(true);
 
     try {
-      await axios.post(`${env.REACT_APP_API_ENDPOINT_BASEURL}${env.REACT_APP_API_ENDPOINT_CREATEPLAYERS}`, formData, {
+      await axios.post(`http://localhost:8080/admin/createplayers`, formData, {
         withCredentials: true,
       });
 

@@ -27,8 +27,8 @@ export default function AddUser() {
   const fetchData = async () => {
     try {
       const [linkedAccountsResponse, battleLogsResponse] = await Promise.all([
-        fetch(`${env.REACT_APP_API_ENDPOINT_BASEURL}${env.REACT_APP_API_ENDPOINT_LINKEDURL}`),
-        fetch(`${env.REACT_APP_API_ENDPOINT_BASEURL}${env.REACT_APP_API_ENDPOINT_BATTLELOGS}`),
+        fetch(`http://localhost:8080/getlinked-accounts`),
+        fetch(`http://localhost:8080/battle-logs`),
       ]);
 
       const linkedAccountsData = await linkedAccountsResponse.json();
@@ -80,7 +80,7 @@ export default function AddUser() {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await axios.get(`${env.REACT_APP_API_ENDPOINT_BASEURL}${env.REACT_APP_API_ENDPOINT_BATTLELOGS}`);
+        const response = await axios.get(`http://localhost:8080/battle-logs`);
         setPlayers(response.data);
         setTotalPages(Math.ceil(response.data.length / 10)); // Assuming 10 rows per page
       } catch (error) {
@@ -95,7 +95,7 @@ export default function AddUser() {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          `${env.REACT_APP_API_ENDPOINT_BASEURL}${env.REACT_APP_API_ENDPOINT_ADMINACCESSCHECK}`,
+          `http://localhost:8080/api/test/admin`,
           { withCredentials: true }
         );
 
@@ -152,7 +152,7 @@ export default function AddUser() {
 
     try {
       await axios.post(
-       `${env.REACT_APP_API_ENDPOINT_BASEURL}${env.REACT_APP_API_ENDPOINT_ADDACCOUNTS}`,
+       `http://localhost:8080/addPlayerAccount`,
         formData,
         {
           withCredentials: true,
@@ -182,7 +182,7 @@ export default function AddUser() {
     setIsUnlinking(true);
 
     try {
-      await axios.delete(`${env.REACT_APP_API_ENDPOINT_BASEURL}${env.REACT_APP_API_ENDPOINT_UNLINKACCOUNTS}`, {
+      await axios.delete(`http://localhost:8080/admin/unlinkPlayerAccount`, {
         data: formData,
         withCredentials: true,
       });

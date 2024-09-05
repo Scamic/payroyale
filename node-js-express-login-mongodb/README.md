@@ -12,58 +12,8 @@ The diagram shows flow of how we implement User Registration, User Login and Aut
 ![node-js-express-login-example-mongodb-flow](node-js-express-login-example-mongodb-flow.png)
 
 For more detail, please visit:
-> [Node.js Express Login and Registration example with MongoDB and JWT](https://www.bezkoder.com/node-js-express-login-mongodb/)
+> [Node.js Express Login and Registration example with MongoDB and JWT]([https://dvmhn07.medium.com/jwt-authentication-in-node-js-a-practical-guide-c8ab1b432a49](https://dvmhn07.medium.com/jwt-authentication-in-node-js-a-practical-guide-c8ab1b432a49)
 
-Working with Front-end:
-> [Angular 12](https://www.bezkoder.com/angular-12-jwt-auth-httponly-cookie/) / [Angular 13](https://www.bezkoder.com/angular-13-jwt-auth-httponly-cookie/) / [Angular 14](https://www.bezkoder.com/angular-14-jwt-auth/) / [Angular 15](https://www.bezkoder.com/angular-15-jwt-auth/) / [Angular 16](https://www.bezkoder.com/angular-16-jwt-auth/) / [Angular 17](https://www.bezkoder.com/angular-17-jwt-auth/)
-
-> [React](https://www.bezkoder.com/react-login-example-jwt-hooks/) / [React Redux](https://www.bezkoder.com/redux-toolkit-auth/)
-
-## More Practice:
-> [Node.js, Express & MongoDb: Build a CRUD Rest Api example](https://www.bezkoder.com/node-express-mongodb-crud-rest-api/)
-
-> [Server side Pagination in Node.js with MongoDB and Mongoose](https://www.bezkoder.com/node-js-mongodb-pagination/)
-
-> [Node.js Express File Upload Rest API example](https://www.bezkoder.com/node-js-express-file-upload/)
-
-> [Node.js + MongoDB: User Authentication & Authorization with JWT (using HTTP headers)](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)
-
-Associations:
-> [MongoDB One-to-One relationship tutorial with Mongoose examples](https://www.bezkoder.com/mongoose-one-to-one-relationship-example/)
-
-> [MongoDB One-to-Many Relationship tutorial with Mongoose examples](https://www.bezkoder.com/mongoose-one-to-many-relationship/)
-
-> [MongoDB Many-to-Many Relationship with Mongoose examples](https://www.bezkoder.com/mongodb-many-to-many-mongoose/)
-
-Fullstack:
-> [Vue.js + Node.js + Express + MongoDB example](https://www.bezkoder.com/vue-node-express-mongodb-mevn-crud/)
-
-> [Angular 8 + Node.js + Express + MongoDB example](https://www.bezkoder.com/angular-mongodb-node-express/)
-
-> [Angular 10 + Node.js + Express + MongoDB example](https://www.bezkoder.com/angular-10-mongodb-node-express/)
-
-> [Angular 11 + Node.js + Express + MongoDB example](https://www.bezkoder.com/angular-11-mongodb-node-js-express/)
-
-> [Angular 12 + Node.js + Express + MongoDB example](https://www.bezkoder.com/angular-12-mongodb-node-js-express/)
-
-> [Angular 13 + Node.js + Express + MongoDB example](https://www.bezkoder.com/mean-stack-crud-example-angular-13/)
-
-> [Angular 14 + Node.js + Express + MongoDB example](https://www.bezkoder.com/mean-stack-crud-example-angular-14/)
-
-> [Angular 15 + Node.js + Express + MongoDB example](https://www.bezkoder.com/angular-15-node-js-express-mongodb/)
-
-> [Angular 16 + Node.js + Express + MongoDB example](https://www.bezkoder.com/angular-16-node-js-express-mongodb/)
-
-> [Angular 17 + Node.js + Express + MongoDB example](https://www.bezkoder.com/angular-17-node-js-express-mongodb/)
-
-> [React + Node.js + Express + MongoDB example](https://www.bezkoder.com/react-node-express-mongodb-mern-stack/)
-
-Integration on same Server/Port:
-> [Integrate Vue with Node.js Express](https://www.bezkoder.com/serve-vue-app-express/)
-
-> [Integrate Angular with Node.js Express](https://www.bezkoder.com/integrate-angular-12-node-js/)
-
-> [Integrate React with Node.js Express](https://www.bezkoder.com/integrate-react-express-same-server-port/)
 
 ## Project setup
 ```
@@ -74,3 +24,45 @@ npm install
 ```
 node server.js
 ```
+
+## Features
+
+- CR Themed with Realtime Stats
+- Low Latency
+- Self made Web Scrapers for Clash royale
+- Cross platform
+
+
+## Authors
+
+- [@piyushpatelcodes](https://www.github.com/piyushpatelcodes) 
+
+<h3 align="left">Connect with me:</h3>
+<p align="left"> https://www.linkedin.com/in/piyushpatelcodes/
+</p>
+
+<h3 align="left" style="color:#1A73E8; font-family: 'Arial', sans-serif; text-shadow: 2px 2px 4px #000000;">
+   Languages and Tools Used in This Backend 
+</h3>
+<p align="left">
+    <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> 
+        <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="50" height="50" style="border: 2px solid #1A73E8; border-radius: 10px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3); margin-right: 10px;" /> 
+    </a> 
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> 
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="50" height="50" style="border: 2px solid #1A73E8; border-radius: 10px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3); margin-right: 10px;" /> 
+    </a> 
+    <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> 
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="50" height="50" style="border: 2px solid #1A73E8; border-radius: 10px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3); margin-right: 10px;" /> 
+    </a> 
+    <a href="https://nodejs.org" target="_blank" rel="noreferrer"> 
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="50" height="50" style="border: 2px solid #1A73E8; border-radius: 10px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3); margin-right: 10px;" /> 
+    </a> 
+    <a href="https://postman.com" target="_blank" rel="noreferrer"> 
+        <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="50" height="50" style="border: 2px solid #1A73E8; border-radius: 10px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3); margin-right: 10px;" /> 
+    </a> 
+    <a  href="https://reactjs.org/" target="_blank" rel="noreferrer"> 
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="50" height="50" style="border: 2px solid #1A73E8; border-radius: 100px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3);" /> 
+    </a>
+</p>
+
+
