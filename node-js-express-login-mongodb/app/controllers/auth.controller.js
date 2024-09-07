@@ -77,7 +77,8 @@ exports.signin = (req, res) => {
       res.cookie('clashroyale-session', token, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
-        sameSite: 'strict'
+        sameSite: 'None',
+        secure: true,
       });
 
       res.status(200).send({
