@@ -6,44 +6,37 @@ const Role = db.role;
 
 verifyToken = (req, res, next) => {
   const cookies = req.headers.cookie; // Get the raw cookie header
-  
+  console.log(req.headers);
+
   // Simple cookie parsing
   if (!cookies) {
     return res.status(403).send({ message: "No token provided!" });
   }
-  
-    const cookieArray = cookies.split('; ');
-    
-    const cookieMap = cookieArray.reduce((map, cookie) => {
-      const [key, value] = cookie.split('=');
-      map[key] = value;
-      return map;
-    }, {});
-    
-   const token = cookieMap['clashroyale-session']
-   try{
-    if (!token) {
-      return res.status(403).send({ message: "No token provided!" });
-    }
-   }
 
-  catch(e){
+  const cookieArray = cookies.split("; ");
+
+  const cookieMap = cookieArray.reduce((map, cookie) => {
+    const [key, value] = cookie.split("=");
+    map[key] = value;
+    return map;
+  }, {});
+
+  const token = cookieMap["clashroyale-session"];
+  console.log(token);
+  if (!token) {
     return res.status(403).send({ message: "No token provided!" });
-
   }
 
-  jwt.verify(token,
-            config.secret,
-            (err, decoded) => {
-              if (err) {
-                console.log(err)
-                return res.status(401).send({
-                  message: "Unauthorized!",
-                });
-              }
-              req.userId = decoded.id;
-              next();
-            });
+  jwt.verify(token, config.secret, (err, decoded) => {
+    if (err) {
+      console.log(err);
+      return res.status(401).send({
+        message: "Unauthorized!",
+      });
+    }
+    req.userId = decoded.id;
+    next();
+  });
 };
 
 isAdmin = (req, res, next) => {
