@@ -283,7 +283,7 @@ module.exports = (app) => {
     }
   });
 
-  app.get("/battle-logs", async (req, res) => {
+  app.get("/battle-logs",authJwt.verifyToken, async (req, res) => {
     try {
       const data = await scrapeBattleLogs();
       return res.send(data);
