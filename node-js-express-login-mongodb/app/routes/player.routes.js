@@ -10,9 +10,14 @@ const scrapeBattleLogs = require("../scrapers/scrapeData");
 const scrapeClanMembersWithLogs = require("../scrapers/scraper3");
 const fetchBattleData = require("../scrapers/scrapePlayerDeck");
 
-const baseURL = window.location.hostname === 'localhost'
-  ? 'http://localhost:8080'
-  : 'https://payroyale-production.up.railway.app';
+const config = {
+  development: 'http://localhost:8080',
+  production: 'https://payroyale-production.up.railway.app'
+};
+
+// const baseURL =  config[process.env.NODE_ENV || 'development'];
+const baseURL =  config['production'];
+
 
 module.exports = (app) => {
   // Ensure middleware is used before routes
