@@ -3,18 +3,17 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Nav from "./components/Nav";
-import Blog from './components/Blog';
 import Card from './components/card';
 import SignUp from './components/user/Signup';
 import Login from './components/user/Signin';
 import AddUser from "./components/admin/adduser";
-import Carddynamic from "./components/carddynamic"
 import ClashRoyaleTable from "./components/payTable"
 import AddPaymentinfo from './components/admin/addpaymentinfo';
 import Playerinfo from "./components/player/playerinfo"
-import Deck from "./components/player/deck"
-import BattleCard from "./components/player/BattleCard"
 import About from './components/About';
+import Analytics from "./components/admin/analytics"
+import Calendar from './components/user/calendar';
+
 const App = () => {
     useEffect(() => {
         AOS.init({
@@ -41,7 +40,7 @@ const Main = () => {
         <>
             {!isAuthPage && <Nav />}
             <Routes>
-            <Route path="/add" element={<AddUser />} />
+            <Route path="/linkaccounts" element={<AddUser />} />
                 <Route path="/" element={  <Card />}/>
                 <Route path="/about" element={ <About />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -49,7 +48,8 @@ const Main = () => {
                 <Route path="/war-stats" element={<ClashRoyaleTable />} />
                 <Route path="/addpaymentinfo" element={<AddPaymentinfo />} />
                 <Route path="/playerinfo/player/:playerLink" element={<Playerinfo />} />
-                
+                <Route path="/viewanalytics" element={<Analytics />} />       
+                <Route path="/viewcalendar" element={<Calendar />} />                 
             </Routes>
             
         </>

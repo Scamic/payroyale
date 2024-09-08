@@ -5,15 +5,21 @@ import { FaTrophy, FaBolt, FaShieldAlt } from 'react-icons/fa';
 import { SiElixir } from 'react-icons/si';
 import './playerinfo.css';
 import BattleCard from "./BattleCard";
+import env from "react-dotenv";
+
 
 export default function PlayerInfo() {
   const [playerInfo, setPlayerInfo] = useState(null);
   const { playerLink } = useParams();
 
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
+
   useEffect(() => {
     const fetchPlayerInfo = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/clan-members-with-logs-playerinfo?playerLink=${playerLink}`);
+        const response = await axios.get(`${baseURL}/clan-members-with-logs-playerinfo?playerLink=${playerLink}`);
         setPlayerInfo(response.data);
       } catch (error) {
         console.error('Error fetching player info:', error);

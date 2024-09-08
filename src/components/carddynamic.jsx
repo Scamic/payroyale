@@ -14,11 +14,15 @@ export default function Blog() {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [fameFilter, setFameFilter] = useState(0);
 
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
+
   useEffect(() => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/test/admin",
+         `${baseURL}/test/admin`,
           { withCredentials: true }
         );
 
@@ -40,7 +44,7 @@ export default function Blog() {
 
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/clan-members-with-logs");
+        const response = await axios.get(`${baseURL}/clan-members-with-logs`);
         const sortedPosts = response.data.sort((a, b) => b.fame - a.fame); // Sorting posts by Fame in decreasing order
         setPosts(sortedPosts);
       } catch (error) {
@@ -91,7 +95,7 @@ export default function Blog() {
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            Highest scoring Clan in Clash Royale
+            Highest scoring players
           </p>
           <div className="mt-4">
             <label htmlFor="fameFilter" className="block text-lg font-medium text-gray-700">

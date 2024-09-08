@@ -12,6 +12,10 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
 
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -32,7 +36,7 @@ export default function SignIn() {
     }
 
     try {
-      const response = await axios.post(`http://localhost:8080/api/auth/signin`, formData, { withCredentials: true });
+      const response = await axios.post(`${baseURL}/api/auth/signin`, formData, { withCredentials: true });
 
       if (response.status === 200 && response.data) {
         const userData = response.data;

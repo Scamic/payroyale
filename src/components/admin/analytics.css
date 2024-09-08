@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.bg-green-50 {
+  background-color: #f0f9f4;
+}
+
+.bg-green-100 {
+  background-color: #d1f5d3;
+}
+
+.text-green-800 {
+  color: #005f00;
+}
+
+.text-green-700 {
+  color: #006400;
+}
+
+.text-green-600 {
+  color: #007f00;
+}
+
+.text-green-500 {
+  color: #009700;
+}
+
+.text-green-400 {
+  color: #00b300;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

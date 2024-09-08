@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './about.css'; // Ensure this file includes the CSS above
-// import Spline from "@splinetool/react-spline";
 
 export default function App() {
   const [animationClass, setAnimationClass] = useState('gradient-text');
@@ -41,7 +40,6 @@ export default function App() {
         allow="fullscreen"
         title="Spline Scene"
       ></iframe>
-{/*        <Spline scene="https://prod.spline.design/pGqp32AzIknjOfuJ/scene.splinecode" /> */}
       <div style={{
         position: 'absolute',
         bottom: '10px',

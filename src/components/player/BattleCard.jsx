@@ -7,14 +7,17 @@ const ClashRoyaleCard = ({ playerTag }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // const { playerTag } = useParams();
+
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
 
   useEffect(() => {
     if (!playerTag) return;
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/battle-data?tag=${playerTag}`);
+        const response = await axios.get(`${baseURL}/api/battle-data?tag=${playerTag}`);
         const parsedData = JSON.parse(response.data.match(/1:(\{.*\})/)[1]);
         setData(parsedData.data);
       } catch (error) {
@@ -34,8 +37,8 @@ const ClashRoyaleCard = ({ playerTag }) => {
     <div className="cards-container">
       {data.map((battle, index) => {
         const { team, opponent, gameMode, arena } = battle;
-        const userDeck = team[0].cards;
-        const opponentDeck = opponent[0].cards;
+        const userDeck = team[0]?.cards;
+        const opponentDeck = opponent[0]?.cards;
 
         return (
           <div key={index} className="clash-royale-card">
@@ -58,20 +61,36 @@ const ClashRoyaleCard = ({ playerTag }) => {
               <div className="decks-container">
                 {/* User Deck */}
                 <div className="deck user-deck">
-                  {userDeck.map((card) => (
-                    <div key={card.id} className="card-slot">
-                      <img src={card.iconUrls.medium} alt={card.name} className="card-image" />
-                    </div>
-                  ))}
+                  {userDeck ? (
+                    userDeck.map((card) => (
+                      <div key={card.id} className="card-slot">
+                        {card.iconUrls?.medium ? (
+                          <img src={card.iconUrls.medium} alt={card.name} className="card-image" />
+                        ) : (
+                          <div>No card image available</div>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <div>No data found</div>
+                  )}
                 </div>
 
                 {/* Opponent Deck */}
                 <div className="deck opponent-deck">
-                  {opponentDeck.map((card) => (
-                    <div key={card.id} className="card-slot">
-                      <img src={card.iconUrls.medium} alt={card.name} className="card-image" />
-                    </div>
-                  ))}
+                  {opponentDeck ? (
+                    opponentDeck.map((card) => (
+                      <div key={card.id} className="card-slot">
+                        {card.iconUrls?.medium ? (
+                          <img src={card.iconUrls.medium} alt={card.name} className="card-image" />
+                        ) : (
+                          <div>No card image available</div>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <div>No data found</div>
+                  )}
                 </div>
               </div>
             </div>

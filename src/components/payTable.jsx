@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import Spinner from "./Spinner"
+
 const avatars = [
   '/avatars/avatar.png',
   '/avatars/avatar2.png',
@@ -10,6 +11,10 @@ const avatars = [
   '/avatars/avatar5.png',
   '/avatars/avatar6.png',
 ];
+
+const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
 
 const getRandomAvatar = () => avatars[Math.floor(Math.random() * avatars.length)];
 
@@ -20,7 +25,7 @@ const ClashRoyaleTable = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/clan-members");
+        const response = await axios.get(`${baseURL}/clan-members`);
         setPlayers(response.data);
       } catch (error) {
         console.error("Error fetching players:", error);

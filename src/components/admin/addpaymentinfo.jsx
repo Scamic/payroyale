@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../Spinner"; // Import the Spinner component
+import env from "react-dotenv";
 
 export default function Adduser() {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -14,13 +15,17 @@ export default function Adduser() {
     // paypalId:"",
   });
   const [successMessage, setSuccessMessage] = useState("");
+
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
   
 
   useEffect(() => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/test/admin",
+          `${baseURL}/api/test/admin`,
           { withCredentials: true }
         );
 
@@ -59,7 +64,7 @@ export default function Adduser() {
     setIsSubmitting(true);
 
     try {
-      await axios.post("http://localhost:8080/admin/createplayers", formData, {
+      await axios.post(`${baseURL}/admin/createplayers`, formData, {
         withCredentials: true,
       });
 

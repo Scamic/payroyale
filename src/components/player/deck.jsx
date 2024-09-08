@@ -2,15 +2,20 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // import './deck.css'; // Ensure you have a styles.css file for custom styling
 
+
 const BattleData = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/battle-data');
+        const response = await axios.get(`${baseURL}/api/battle-data`);
         // console.log('Raw response data:', response.data);
 
         // Parsing the string into a JSON object
