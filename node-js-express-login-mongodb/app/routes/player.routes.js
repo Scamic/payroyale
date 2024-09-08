@@ -10,6 +10,10 @@ const scrapeBattleLogs = require("../scrapers/scrapeData");
 const scrapeClanMembersWithLogs = require("../scrapers/scraper3");
 const fetchBattleData = require("../scrapers/scrapePlayerDeck");
 
+const baseURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
+
 module.exports = (app) => {
   // Ensure middleware is used before routes
   app.use(express.json());
@@ -25,7 +29,7 @@ module.exports = (app) => {
         const { playerTag, email, paylink } = req.body;
 
         // Find player data from the API based on playerTag
-        const response = await axios.get("http://localhost:8080/battle-logs");
+        const response = await axios.get(`${baseURL}/battle-logs`);
         const apiPlayers = response.data;
 
         // Find the specific player in the API response
@@ -148,7 +152,7 @@ module.exports = (app) => {
 
     try {
       // Fetch the players data from the battle-logs API
-      const response = await axios.get("http://localhost:8080/battle-logs");
+      const response = await axios.get(`${baseURL}/battle-logs`);
       const apiPlayers = response.data;
 
       // Find the player in the fetched data
@@ -234,7 +238,7 @@ module.exports = (app) => {
 
   try {
     // Fetch player data from the external API
-    const response = await axios.get('http://localhost:8080/battle-logs');
+    const response = await axios.get(`${baseURL}/battle-logs`);
     const apiPlayers = response.data;
 
     // Check if the player exists in the external API
@@ -283,7 +287,7 @@ module.exports = (app) => {
     }
   });
 
-  app.get("/battle-logs",authJwt.verifyToken, async (req, res) => {
+  app.get("/battle-logs", async (req, res) => {
     try {
       const data = await scrapeBattleLogs();
       return res.send(data);
