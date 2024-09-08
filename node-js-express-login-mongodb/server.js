@@ -13,12 +13,12 @@ const config = {
 };
 
 // const baseURL =  config[process.env.NODE_ENV || 'development'];
-const baseURL =  config['development'];
+const baseURL =  config['production'];
 
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:5173"], // Frontend URL
+    origin: [${baseURL], // Frontend URL
   })
 );
 /* for Angular Client (withCredentials) */
