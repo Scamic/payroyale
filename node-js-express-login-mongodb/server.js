@@ -18,7 +18,7 @@ const baseURL =  config['production'];
 app.use(
   cors({
     credentials: true,
-    origin: [${baseURL], // Frontend URL
+    origin: ['https://payroyale.vercel.app'], // Frontend URL
   })
 );
 /* for Angular Client (withCredentials) */
