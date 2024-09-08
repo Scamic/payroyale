@@ -9,6 +9,8 @@ const scrapeClanMembers = require("../scrapers/scraper");
 const scrapeBattleLogs = require("../scrapers/scrapeData");
 const scrapeClanMembersWithLogs = require("../scrapers/scraper3");
 const fetchBattleData = require("../scrapers/scrapePlayerDeck");
+const scrapeRaceData = require("../scrapers/scraperrealtime");
+
 
 const config = {
   development: 'http://localhost:8080',
@@ -297,6 +299,16 @@ module.exports = (app) => {
       const data = await scrapeBattleLogs();
       return res.send(data);
     } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/scrapelive", async (req, res) => {
+    try {
+      const data = await scrapeRaceData();
+      return res.send(data);
+    } catch (error) {
+      console.log(error)
       res.status(500).json({ error: error.message });
     }
   });

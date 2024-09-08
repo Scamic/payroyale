@@ -25,8 +25,8 @@ const FilterComponent = ({ filterValues, onFilterValuesChange }) => {
   };
 
   const baseURL = window.location.hostname === 'localhost'
-  ? 'http://localhost:8080/'
-  : 'https://payroyale-production.up.railway.app/';
+  ? 'http://localhost:8080'
+  : 'https://payroyale-production.up.railway.app';
 
   useEffect(() => {
     const verifyToken = async () => {

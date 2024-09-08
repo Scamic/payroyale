@@ -6,6 +6,7 @@ import "./badge.css";
 import "./card.css";
 import { useNavigate } from "react-router-dom";
 import { FaDownload } from "react-icons/fa";
+import { IoMdOptions } from "react-icons/io";
 
 import { IoArrowForwardOutline } from "react-icons/io5";
 import badgeImage from "/clanpic.jpeg";
@@ -29,19 +30,18 @@ export default function Blog() {
     ],
   });
 
-  const baseURL = window.location.hostname === 'localhost'
-  ? 'http://localhost:8080'
-  : 'https://payroyale-production.up.railway.app';
-
+  const baseURL =
+    window.location.hostname === "localhost"
+      ? "http://localhost:8080"
+      : "https://payroyale-production.up.railway.app";
 
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const response = await axios.get(
-          `${baseURL}/api/test/admin`,
-          { withCredentials: true }
-        );
-        console.log(response.data)
+        const response = await axios.get(`${baseURL}/api/test/admin`, {
+          withCredentials: true,
+        });
+        console.log(response.data);
         setIsAuthorized(response.data === "Admin Content.");
       } catch (error) {
         setIsAuthorized(false);
@@ -56,7 +56,7 @@ export default function Blog() {
     const fetchPosts = async () => {
       try {
         // Fetching battle logs
-       
+
         const response = await axios.get(`${baseURL}/battle-logs`);
         const sortedPosts = response.data.sort((a, b) => b.fame - a.fame);
 
@@ -68,7 +68,7 @@ export default function Blog() {
               const response2 = await axios.get(
                 `${baseURL}/admin/getplayerpaylink/${playerTag}`
               );
-              
+
               // Check if the paylink exists in the response data
               const paylink = response2.data.paylink || null;
               return {
@@ -163,6 +163,16 @@ export default function Blog() {
     link.click();
     document.body.removeChild(link);
   };
+  // filter mobile view
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible(!isFilterVisible);
+  };
+
+  const closeFilter = () => {
+    setIsFilterVisible(false);
+  };
 
   return (
     <div className="bg-slate-100 py-24 sm:py-32 relative overflow-hidden">
@@ -203,23 +213,71 @@ export default function Blog() {
               <Spline scene="https://prod.spline.design/Tq3GXrdFsh0GS6WM/scene.splinecode" />
             </div>
           </div>
+{/* // filter start */}
 
-          <div className="hidden lg:block">
-            <FilterComponent
-              filterValues={filterValues}
-              onFilterValuesChange={handleFilterValuesChange}
-              isAuthorized={isAuthorized}
-            />
+
+          <div>
+      {/* For laptop/desktop screens */}
+      <div className="hidden lg:block">
+        <FilterComponent
+          filterValues={filterValues}
+          onFilterValuesChange={handleFilterValuesChange}
+          isAuthorized={isAuthorized}
+        />
+        {/* CSV tools */}
+        <button
+          onClick={handleDownloadCsv}
+          className="mt-4 relative inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-offset-2"
+        >
+          <FaDownload className="text-white mr-2" />
+          Download All Players Data as Excel
+        </button>
+      </div>
+
+      {/* For mobile/small screens */}
+      <div className="block lg:hidden">
+        {/* Button to toggle full-screen filter and CSV popup */}
+        <button
+          onClick={toggleFilterVisibility}
+          className="mt-4 relative inline-flex items-center bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-offset-2"
+        >
+          {!isFilterVisible ?  <IoMdOptions /> :""}
+        </button>
+
+        {/* Full-screen popup */}
+        {isFilterVisible && (
+          <div className="fixed inset-0 z-50 bg-white bg-opacity-90 overflow-auto  p-6">
+            {/* Close button */}
+            <button
+              onClick={closeFilter}
+              className="absolute top-4  right-4 text-gray-600 hover:text-gray-800 bg-gray-200 hover:bg-gray-300 rounded-full  p-2 focus:outline-none"
+            >
+              Close
+            </button>
+
+            {/* FilterComponent */}
+            <div className="mt-8">
+              <FilterComponent
+                filterValues={filterValues}
+                onFilterValuesChange={handleFilterValuesChange}
+                isAuthorized={isAuthorized}
+              />
+            </div>
+
             {/* CSV tools */}
-
             <button
               onClick={handleDownloadCsv}
-              className=" mt-4 relative inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-offset-2"
+              className="mt-8 w-full inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-offset-2"
             >
               <FaDownload className="text-white mr-2" />
               Download All Players Data as Excel
             </button>
           </div>
+        )}
+      </div>
+    </div>
+
+    {/* // filter end */}
         </div>
 
         <div className="mt-1">
@@ -273,7 +331,9 @@ export default function Blog() {
                       </time>
 
                       <a
-                        href={post.paylink ? post.paylink : "http://localhost:5173/"}
+                        href={
+                          post.paylink ? post.paylink : "http://localhost:5173/"
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -318,7 +378,10 @@ export default function Blog() {
                         src="/avatars/avatar.png"
                         className="h-10 w-10 rounded-full bg-gray-800"
                       />
-                      <div className=" text-sm leading-6 rounded   hover:bg-gray-700 mr-12 p-2" onClick={() => handleViewPlayerinfo(post.playerLink)}>
+                      <div
+                        className=" text-sm leading-6 rounded   hover:bg-gray-700 mr-12 p-2"
+                        onClick={() => handleViewPlayerinfo(post.playerLink)}
+                      >
                         <button className=" font-semibold text-purple-300 max-sm:hidden ">
                           Player Info
                         </button>
@@ -327,14 +390,20 @@ export default function Blog() {
                       {/* // <span className="text-red-500">
                       //   You are not authorized to edit player info
                       // </span> */}
-                      <button><a
-                        style={{ marginTop: 3 }}
-                        href= {post.paylink ? post.paylink : "http://localhost:5173/"}
-                        className="font-semibold  text-white hover:bg-green-400 bg-green-500 px-3 py-2 rounded-md flex items-center gap-2"
-                      >
-                        Pay Info
-                        <IoArrowForwardOutline size={20} />
-                      </a></button>
+                      <button>
+                        <a
+                          style={{ marginTop: 3 }}
+                          href={
+                            post.paylink
+                              ? post.paylink
+                              : "http://localhost:5173/"
+                          }
+                          className="font-semibold  text-white hover:bg-green-400 bg-green-500 px-3 py-2 rounded-md flex items-center gap-2"
+                        >
+                          Pay Info
+                          <IoArrowForwardOutline size={20} />
+                        </a>
+                      </button>
                     </div>
                   </div>
                 </div>

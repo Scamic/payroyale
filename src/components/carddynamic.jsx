@@ -3,39 +3,52 @@ import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./badge.css";
-import { useNavigate } from 'react-router-dom';
-import { FaTrophy } from 'react-icons/fa';
-import { MdAdd } from "react-icons/md";
+import "./card.css";
+import { useNavigate } from "react-router-dom";
+import { FaDownload } from "react-icons/fa";
+
 import { IoArrowForwardOutline } from "react-icons/io5";
-import badgeImage from '/clanpic.jpeg';
+import badgeImage from "/clanpic.jpeg";
+import FilterComponent from "./rewardsfilter";
+import Spline from "@splinetool/react-spline";
+
+import HyperText from "./ui/hypertextutility";
+import Meteors from "./ui/meteorutility";
+import { IoMdOptions } from "react-icons/io";
+
 
 export default function Blog() {
+  const [paylink, setPaylink] = useState(null);
   const [posts, setPosts] = useState([]);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [fameFilter, setFameFilter] = useState(0);
+  const [filterValues, setFilterValues] = useState({
+    day: "4 days",
+    fameRewards: [
+      { score: 3500, reward: "$10" },
+      { score: 3400, reward: "$8" },
+      { score: 3200, reward: "$3" },
+    ],
+  });
 
   const baseURL = window.location.hostname === 'localhost'
   ? 'http://localhost:8080'
   : 'https://payroyale-production.up.railway.app';
 
+
   useEffect(() => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-         `${baseURL}/test/admin`,
+          `${baseURL}/api/test/admin`,
           { withCredentials: true }
         );
-
-        if (response.data === "Admin Content.") {
-          setIsAuthorized(true);
-        } else {
-          setIsAuthorized(false);
-        }
+        console.log(response.data)
+        setIsAuthorized(response.data === "Admin Content.");
       } catch (error) {
         setIsAuthorized(false);
       }
     };
-
     verifyToken();
   }, []);
 
@@ -44,9 +57,38 @@ export default function Blog() {
 
     const fetchPosts = async () => {
       try {
-        const response = await axios.get(`${baseURL}/clan-members-with-logs`);
-        const sortedPosts = response.data.sort((a, b) => b.fame - a.fame); // Sorting posts by Fame in decreasing order
-        setPosts(sortedPosts);
+        // Fetching battle logs
+       
+        const response = await axios.get(`${baseURL}/scrapelive`);
+        const sortedPosts = response.data.sort((a, b) => b.fame - a.fame);
+
+        // Fetching paylinks for each player
+        const updatedPosts = await Promise.all(
+          sortedPosts.map(async (post) => {
+            const playerTag = post.playerLink.split("/player/")[1];
+            try {
+              const response2 = await axios.get(
+                `${baseURL}/admin/getplayerpaylink/${playerTag}`
+              );
+              
+              // Check if the paylink exists in the response data
+              const paylink = response2.data.paylink || null;
+              return {
+                ...post,
+                paylink,
+              };
+            } catch (error) {
+              // If the paylink is not found or any other error occurs, handle it here
+              console.error(
+                `Error fetching paylink for playerTag ${playerTag}:`,
+                error
+              );
+              return { ...post, paylink: null }; // Set to null if there's an error
+            }
+          })
+        );
+
+        setPosts(updatedPosts);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -55,25 +97,105 @@ export default function Blog() {
     fetchPosts();
   }, []);
 
-  const currentDate = new Date().toLocaleDateString();
-
+  const currentDate = "SampleDate";
   const navigate = useNavigate();
 
-  const handleAddPlayerinfo = () => {
-    navigate('/addpaymentinfo');
-  };
-
   const handleViewPlayerinfo = (playerLink) => {
-      // This should log the playerLink, not an event object
-      // console.log('Player link:', playerLink);
-    
     navigate(`/playerinfo${playerLink}`);
   };
-  
+
+  const copyToClipboard = (value) => {
+    navigator.clipboard
+      .writeText(value)
+      .then(() => {
+        alert(`${value} copied to clipboard!`);
+      })
+      .catch((err) => {
+        console.error("Could not copy text: ", err);
+      });
+  };
 
   const handleFameFilterChange = (e) => {
     setFameFilter(e.target.value);
   };
+
+  const handleFilterValuesChange = (newValues) => {
+    setFilterValues(newValues);
+  };
+
+  const handleDownloadCsv = () => {
+    const csvHeaders = [
+      "Rank",
+      "Player Name",
+      "Player Link",
+      "Decks Used",
+      "Boat Attacks",
+      "Score",
+      "Rewards",
+    ];
+
+    const csvRows = posts.map((post) => {
+      const reward = filterValues.fameRewards.find(
+        (reward) => post.fame >= reward.score
+      )?.reward;
+
+      return [
+        post.rank,
+        post.playerName,
+        post.playerLink,
+        post.decksUsed,
+        post.boatAttacks,
+        post.fame,
+        reward || "No Reward",
+      ];
+    });
+
+    let csvContent =
+      "data:text/csv;charset=utf-8," +
+      csvHeaders.join(",") +
+      "\n" +
+      csvRows.map((e) => e.join(",")).join("\n");
+
+    // Get the current date and calculate the war week dynamically
+  const now = new Date();
+  const day = now.getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+  const warStartDay = 4; // Thursday
+  const warStartHour = 3; // 3:00 AM IST
+  let warWeekNumber;
+
+  // Calculate the week number of the war
+  if (day >= warStartDay || (day === warStartDay && now.getHours() >= warStartHour)) {
+    // We're in the current war week
+    warWeekNumber = Math.ceil((now.getDate() - warStartDay + 1) / 7);
+  } else {
+    // We're in the previous war week
+    warWeekNumber = Math.ceil((now.getDate() - warStartDay + 1) / 7);
+  }
+
+  const month = now.toLocaleString('default', { month: 'long' });
+  const dynamicFileName = `${month}_week${warWeekNumber}_WarReward.csv`;
+
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", dynamicFileName);
+  document.body.appendChild(link);
+
+  link.click();
+  document.body.removeChild(link);
+
+};
+
+// filter mobile view
+const [isFilterVisible, setIsFilterVisible] = useState(false);
+
+const toggleFilterVisibility = () => {
+  setIsFilterVisible(!isFilterVisible);
+};
+
+const closeFilter = () => {
+  setIsFilterVisible(false);
+};
 
   return (
     <div className="bg-slate-100 py-24 sm:py-32 relative overflow-hidden">
@@ -83,37 +205,122 @@ export default function Blog() {
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
-        <div className="mx-auto max-w-2xl lg:mx-0">
-          <h2
-            className="text-gray-900 text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 underline-animation p-4"
-            data-aos="fade-up"
-          >
-            Player Information
-          </h2>
-          <p
-            className="mt-2 text-lg leading-8 text-gray-700"
-            data-aos="fade-up"
-            data-aos-delay="100"
-          >
-            Highest scoring players
-          </p>
-          <div className="mt-4">
-            <label htmlFor="fameFilter" className="block text-lg font-medium text-gray-700">
-              Filter by Fame:
-            </label>
-            <input
-              type="number"
-              id="fameFilter"
-              value={fameFilter}
-              onChange={handleFameFilterChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Enter minimum Fame value"
+        <div className="flex justify-between">
+          <div className="mx-auto max-w-2xl lg:mx-0">
+            {/* text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 */}
+
+            <HyperText
+              className="
+    text-3xl 
+    sm:text-4xl 
+    md:text-5xl 
+    lg:text-6xl 
+    font-bold 
+    mb-4 
+    text-slate-700
+   
+   
+  "
+              data-aos="fade-up"
+              text="Player Information"
             />
+
+            <sup
+              className="mt-2 ml-1 text-lg leading-8 text-gray-700"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              Highest Paying Clan in Clash Royale
+            </sup>
+            <div className="flex-1 h-80">
+              <Spline scene="https://prod.spline.design/Tq3GXrdFsh0GS6WM/scene.splinecode" />
+            </div>
           </div>
+
+{/* filter start */}
+          <div>
+      {/* For laptop/desktop screens */}
+      <div className="hidden lg:block">
+        <FilterComponent
+          filterValues={filterValues}
+          onFilterValuesChange={handleFilterValuesChange}
+          isAuthorized={isAuthorized}
+        />
+        {/* CSV tools */}
+        <button
+          onClick={handleDownloadCsv}
+          className="mt-4 relative inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-offset-2"
+        >
+          <FaDownload className="text-white mr-2" />
+          Download All Players Data as Excel
+        </button>
+      </div>
+
+      {/* For mobile/small screens */}
+      <div className="block lg:hidden">
+        {/* Button to toggle full-screen filter and CSV popup */}
+        <button
+          onClick={toggleFilterVisibility}
+          className="mt-4 relative inline-flex items-center bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-offset-2"
+        >
+          {!isFilterVisible ?  <IoMdOptions /> :""}
+        </button>
+
+        {/* Full-screen popup */}
+        {isFilterVisible && (
+          <div className="fixed inset-0 z-50 bg-white bg-opacity-90 overflow-auto  p-6">
+            {/* Close button */}
+            <button
+              onClick={closeFilter}
+              className="absolute top-4  right-4 text-gray-600 hover:text-gray-800 bg-gray-200 hover:bg-gray-300 rounded-full  p-2 focus:outline-none"
+            >
+              Close
+            </button>
+
+            {/* FilterComponent */}
+            <div className="mt-8">
+              <FilterComponent
+                filterValues={filterValues}
+                onFilterValuesChange={handleFilterValuesChange}
+                isAuthorized={isAuthorized}
+              />
+            </div>
+
+            {/* CSV tools */}
+            <button
+              onClick={handleDownloadCsv}
+              className="mt-8 w-full inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-offset-2"
+            >
+              <FaDownload className="text-white mr-2" />
+              Download All Players Data as Excel
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+    {/* filter end */}
         </div>
+
+        <div className="mt-1">
+          <label
+            htmlFor="fameFilter"
+            className="block text-lg font-medium text-gray-700"
+          >
+            Filter by Fame:
+          </label>
+          <input
+            type="number"
+            id="fameFilter"
+            value={fameFilter}
+            onChange={handleFameFilterChange}
+            className="mt-1 block w-3/6 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Enter minimum Fame value - (This Will Show All Players above This Fame value)"
+          />
+        </div>
+
         <div className="mx-auto mt-4 sm:mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 relative z-10">
           {posts
-            .filter((post) => post.fame >= fameFilter)
+            .filter((post) => Number(post.fame) >= Number(fameFilter))
             .map((post, index) => (
               <article
                 key={index}
@@ -121,60 +328,92 @@ export default function Blog() {
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
               >
-                <div className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 rounded-lg border border-gray-700 p-8 w-full">
-                  <img src="/image.png" style={{ width: 90 }} alt="Badge" className="badge-image" />
-                  <img src={badgeImage} style={{ marginRight: 100 }} alt="Badge" className="badge-image" />
-                  <div className="flex items-center gap-x-4 text-xs">
-                    <time
-                      dateTime={new Date().toISOString()}
-                      className="text-yellow-500"
-                    >
-                      {currentDate}
-                    </time>
-                    <span className="relative z-10 rounded-full bg-gray-700 px-3 py-1.5 font-medium text-gray-200">
-                      Payment
-                    </span>
-                  </div>
-                  <div className="group relative">
-                    <h3 className="mt-3 text-lg font-semibold leading-6 text-sky-100 bg-purple-400/10 group-hover:bg-violet-400/10">
-                      <span className="absolute inset-0" />
-                      {post.playerName.toUpperCase()} #{post.playerLink.replace("/player/","")}
-                    </h3>
-                    <div className="mt-5 flex items-center gap-x-2 text-yellow-300">
-                      <FaTrophy size={20} />
-                      <span className="text-sm">{post.trophies}</span>
-                    </div>
-                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-red-200 bg-red-400/10 group-hover:bg-violet-400/10">
-                      Decks Used: {post.decksUsed}
-                    </p>
-                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-emerald-300 bg-emerald-400/10 group-hover:bg-violet-400/10">
-                      Avg Elixir: {post.avgElixir}
-                    </p>
-                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-yellow-300 bg-yellow-400/10 group-hover:bg-violet-400/10">
-                      Fame: {post.fame}
-                    </p>
-                  </div>
-                  <div className="relative mt-8 flex items-center gap-x-4">
+                <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
+                  <Meteors number={30} />
+                  <div className="bg-gray-900 focus:outline-none rounded-lg border border-gray-700 p-8 w-full">
                     <img
-                      alt=""
-                      src="/avatars/avatar.png"
-                      className="h-10 w-15 rounded-full bg-gray-800"
+                      src="/image.png"
+                      style={{ width: 90 }}
+                      alt="Badge"
+                      className="badge-image"
                     />
-                    <div className="text-sm leading-6">
-                      {isAuthorized ? (
-                        <div>
-                          <button onClick={handleAddPlayerinfo} className="font-semibold text-white bg-emerald-500 hover:bg-indigo-600 px-3 py-2 rounded-md flex items-center gap-2">
-                            Add/Update Payment Info <MdAdd size={20} />
-                          </button>
-                          <button style={{marginTop:3}} onClick={() => handleViewPlayerinfo(post.playerLink)} className="font-semibold text-white bg-yellow-500 px-3 py-2 rounded-md flex items-center gap-2">
-                            View Player Info <IoArrowForwardOutline size={20} />
-                          </button>
-                        </div>
-                      ) : (
-                        <button onClick={() => handleViewPlayerinfo(post.playerLink)} className="font-semibold text-white bg-yellow-500 px-3 py-2 rounded-md">
-                          View Player Info 
+                    <img
+                      src={badgeImage}
+                      style={{ marginRight: 100 }}
+                      alt="Badge"
+                      className="badge-image"
+                    />
+                    <div className="flex items-center gap-x-4  text-xs">
+                      <time
+                        dateTime={currentDate}
+                        className="text-gray-500 max-sm:hidden"
+                      >
+                        Name
+                      </time>
+
+                      <a
+                        href={post.paylink ? post.paylink : "http://localhost:5173/"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span className="relative z-10  rounded-full bg-gray-700 px-3 py-1.5 font-medium text-gray-200">
+                          Payment Info
+                        </span>
+                      </a>
+                    </div>
+                    <div
+                      onClick={() =>
+                        copyToClipboard(
+                          post.playerLink.replace("/player/", "").toUpperCase()
+                        )
+                      }
+                      className="group relative"
+                    >
+                      <h3 className="mt-3 text-lg font-semibold leading-6 text-sky-100 bg-purple-400/10 group-hover:bg-violet-400/10">
+                        <span className="absolute inset-0" />
+                        {post.playerName.toUpperCase()}
+                      </h3>
+                      <p className="mt-5 line-clamp-3 text-sm leading-6 text-white bg-purple-400/10 group-hover:bg-violet-400/10">
+                        Tag: #{post.playerLink.replace("/player/", "")}
+                      </p>
+                      <p className="mt-5 line-clamp-3 text-sm leading-6  text-red-200 bg-red-400/10 group-hover:bg-violet-400/10">
+                        Score: {post.fame}
+                      </p>
+                      <p className="mt-5 line-clamp-3 text-sm leading-6  text-yellow-100 bg-yellow-400/10 group-hover:bg-violet-400/10">
+                        Decks Used: {post.decksUsed}
+                      </p>
+                      <p className="mt-5 line-clamp-3 text-sm leading-6 text-emerald-300 bg-emerald-400/10 group-hover:bg-violet-400/10">
+                        Reward Earned:{" "}
+                        {
+                          filterValues.fameRewards.find(
+                            (reward) => post.fame >= reward.score
+                          )?.reward
+                        }
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between mt-8 ">
+                      <img
+                        alt=""
+                        src="/avatars/avatar.png"
+                        className="h-10 w-10 rounded-full bg-gray-800"
+                      />
+                      <div className=" text-sm leading-6 rounded   hover:bg-gray-700 mr-12 p-2" onClick={() => handleViewPlayerinfo(post.playerLink)}>
+                        <button className=" font-semibold text-purple-300 max-sm:hidden ">
+                          Player Info
                         </button>
-                      )}
+                      </div>
+
+                      {/* // <span className="text-red-500">
+                      //   You are not authorized to edit player info
+                      // </span> */}
+                      <button><a
+                        style={{ marginTop: 3 }}
+                        href= {post.paylink ? post.paylink : "http://localhost:5173/"}
+                        className="font-semibold  text-white hover:bg-green-400 bg-green-500 px-3 py-2 rounded-md flex items-center gap-2"
+                      >
+                        Pay Info
+                        <IoArrowForwardOutline size={20} />
+                      </a></button>
                     </div>
                   </div>
                 </div>

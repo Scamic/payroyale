@@ -6,10 +6,19 @@ const dbConfig = require("./app/config/db.config");
 const app = express();
 
 
+
+const config = {
+  development: 'http://localhost:5173',
+  production: 'https://payroyale.vercel.app'
+};
+
+// const baseURL =  config[process.env.NODE_ENV || 'development'];
+const baseURL =  config['development'];
+
 app.use(
   cors({
     credentials: true,
-    origin: ["https://payroyale.vercel.app"], // Frontend URL
+    origin: ["http://localhost:5173"], // Frontend URL
   })
 );
 /* for Angular Client (withCredentials) */
@@ -31,7 +40,8 @@ app.use(
     name: "clashroyale-session",
     keys: ["P!yu$#p@telc0de$-secret-key"], // should use as secret environment variable
     httpOnly: true,
-    sameSite: 'strict',
+    sameSite: 'None',
+    secure: true
   })
 );
 

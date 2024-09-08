@@ -20,7 +20,8 @@ const navigation = [
   { name: "Pay Stats", href: "/war-stats", current: false },
   { name: "Calendar", href: "/viewcalendar", current: false },
   { name: "About Devs", href: "/about", current: false },
-];
+  { name: "WAR Live", href: "/live", current: false },
+]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

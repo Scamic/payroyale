@@ -13,6 +13,7 @@ import Playerinfo from "./components/player/playerinfo"
 import About from './components/About';
 import Analytics from "./components/admin/analytics"
 import Calendar from './components/user/calendar';
+import Live from './components/carddynamic'
 
 const App = () => {
     useEffect(() => {
@@ -49,7 +50,8 @@ const Main = () => {
                 <Route path="/addpaymentinfo" element={<AddPaymentinfo />} />
                 <Route path="/playerinfo/player/:playerLink" element={<Playerinfo />} />
                 <Route path="/viewanalytics" element={<Analytics />} />       
-                <Route path="/viewcalendar" element={<Calendar />} />                 
+                <Route path="/viewcalendar" element={<Calendar />} />    
+                <Route path="/live" element={<Live />}    />        
             </Routes>
             
         </>

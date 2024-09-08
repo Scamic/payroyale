@@ -68,7 +68,7 @@ async function scrapeRaceData() {
     });
 
     // Log the extracted data
-    // console.log(raceData) ;
+   return raceData;
   } catch (error) {
     console.error("Error scraping data:", error);
     return [];
@@ -76,4 +76,4 @@ async function scrapeRaceData() {
 }
 
 // Run the scraper
-scrapeRaceData();
+module.exports=scrapeRaceData;
