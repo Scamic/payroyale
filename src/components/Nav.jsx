@@ -16,11 +16,12 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 
 const navigation = [
-  { name: "Dashboard", href: "/", current: true },
-  { name: "Pay Stats", href: "/war-stats", current: false },
+  { name: "Previous Week", href: "/", current: false },
+  // { name: "Pay Stats", href: "/war-stats", current: false },
   { name: "Calendar", href: "/viewcalendar", current: false },
   { name: "About Devs", href: "/about", current: false },
-  { name: "WAR Live", href: "/live", current: false },
+  { name: "Live Score", href: "/live", current: false },
+  { name: "Home", href: "/home", current: true },
 ]
 
 function classNames(...classes) {
@@ -101,7 +102,7 @@ export default function Nav() {
   return (
     
     
-    <Disclosure as="nav" className="bg-gray-800  h-full">
+    <Disclosure as="nav" className="bg-slate-800 text-white px-4   h-full">
       
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">

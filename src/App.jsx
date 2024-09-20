@@ -14,7 +14,7 @@ import About from './components/About';
 import Analytics from "./components/admin/analytics"
 import Calendar from './components/user/calendar';
 import Live from './components/carddynamic'
-
+import Home from './components/home';
 
 const App = () => {
     useEffect(() => {
@@ -46,6 +46,8 @@ const Main = () => {
         <>
             {!isAuthPage && <Nav />}
             <Routes>
+            <Route path="/Home" element={<Home />} />
+
             <Route path="/linkaccounts" element={<AddUser />} />
                 <Route path="/" element={  <Card />}/>
                 <Route path="/about" element={ <About />} />

@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@font-face {
+    font-family: Mokoto ;
+    src: url(../public/Mokoto\ Demo.ttf);
+}
+.Mokoto{
+    font-family: Mokoto;
+}
