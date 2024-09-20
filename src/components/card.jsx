@@ -38,6 +38,10 @@ export default function Blog() {
       ? "http://localhost:8080"
       : "https://payroyale-production.up.railway.app";
 
+   const frontendURL = window.location.hostname === 'localhost'
+  ? 'http://localhost:5173'
+  : 'https://payroyale.vercel.app';
+
   useEffect(() => {
     const verifyToken = async () => {
       try {
@@ -399,7 +403,7 @@ export default function Blog() {
                           href={
                             post.paylink
                               ? post.paylink
-                              : "http://localhost:5173/"
+                              : `${frontendURL}`
                           }
                           className="font-semibold  text-white hover:bg-green-400 bg-green-500 px-3 py-2 rounded-md flex items-center gap-2"
                         >
