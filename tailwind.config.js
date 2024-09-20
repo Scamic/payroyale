@@ -31,6 +31,7 @@ export default {
         'clash': ['"Clash Royale"', 'sans-serif'],
         'display': ["Satisfy", "Press Start 2P"],
       },
+     
     },
   },
   plugins: [require('@tailwindcss/forms'),],

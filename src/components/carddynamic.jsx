@@ -28,6 +28,8 @@ export default function Blog() {
       { score: 3500, reward: "$10" },
       { score: 3400, reward: "$8" },
       { score: 3200, reward: "$3" },
+      { score: 3200, reward: "$3" },
+      { score: 3200, reward: "$3" },
     ],
   });
 

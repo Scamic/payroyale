@@ -15,6 +15,7 @@ import Analytics from "./components/admin/analytics"
 import Calendar from './components/user/calendar';
 import Live from './components/carddynamic'
 
+
 const App = () => {
     useEffect(() => {
         AOS.init({
@@ -26,10 +27,14 @@ const App = () => {
 
     return (
         <Router>
+
             <div className="App">
                 <Main />
             </div>
+            
+
         </Router>
+
     );
 };
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"; // Make sure to import axios if you're using it
 import Hypertext from "./ui/hypertextutility";
-import env from "react-dotenv";
 
 
 const FilterComponent = ({ filterValues, onFilterValuesChange }) => {
