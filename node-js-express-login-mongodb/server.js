@@ -15,6 +15,18 @@ const config = {
 // const baseURL =  config[process.env.NODE_ENV || 'development'];
 const baseURL =  config['production'];
 
+// Middleware for handling CORS
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", baseURL); // Allow your frontend URL
+  res.header("Access-Control-Allow-Credentials", "true"); // Allow credentials (cookies)
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE,PATCH, OPTIONS"); // Allowed methods
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Allowed headers
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200); // Preflight request handling
+  }
+  next();
+});
+
 app.use(
   cors({
     credentials: true,
