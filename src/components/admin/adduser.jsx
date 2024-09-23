@@ -156,7 +156,7 @@ export default function AddUser() {
 
     try {
       await axios.post(
-       `${baseURL}/addPlayerAccount`,
+       `${baseURL}/admin/addPlayerAccount`,
         formData,
         {
           withCredentials: true,
