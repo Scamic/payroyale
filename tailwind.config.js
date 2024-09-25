@@ -14,7 +14,26 @@ export default {
             transform: "rotate(215deg) translateX(-500px)",
             opacity: 0,
           },
-        },},
+        },
+        blob: {
+          '0%': { transform: 'translate(0px, 0px) scale(1)' },
+          '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+          '100%': { transform: 'translate(0px, 0px) scale(1)' },
+        },
+        grain: {
+          '0%': {
+            transform: 'translate(0, 0)',
+          },
+          '100%': {
+            transform: 'translate(-5%, -5%)',
+          },
+        },
+      },
+      animation: {
+        blob: 'blob 8s infinite',
+      },
+      
       colors: {
         'royale-blue': '#2E3A59',
         'royale-gold': '#F9D132',
@@ -46,3 +65,4 @@ export default {
       // ...
     }
 };
+

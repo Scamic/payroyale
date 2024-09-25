@@ -1,0 +1,61 @@
+/* Intense Grain Overlay */
+.grain-overlay {
+  background: radial-gradient(circle, rgb(241, 0, 0) 1px, rgba(0, 0, 0, 0) 1px); /* Larger dots for more visibility */
+  background-size: 1px 1px; /* Increased density of dots */
+  opacity: 0.6; /* Increased opacity for more intense effect */
+  backdrop-filter: blur(3px); /* Subtle blur for glassy effect */
+  mix-blend-mode: overlay; /* Overlay mode for blending the grain with the background */
+}
+
+/* Blob Animation */
+@keyframes moveBlob {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(10px, -10px) scale(1.05); /* Slight movement */
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+@keyframes circularMove {
+  0% {
+    transform: rotate(0deg) translateX(0vw);
+  }
+  50% {
+    transform: rotate(180deg) translateX(10vw);
+  }
+  100% {
+    transform: rotate(360deg) translateX(0vw);
+  }
+}
+
+.blob-animation {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: circularMove 20s infinite ease-in-out;
+}
+
+
+
+/* Blob Animation Delay */
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+.blob-animation:nth-child(odd) {
+  animation-duration: 25s; /* Slow-moving blobs */
+}
+.blob-animation:nth-child(even) {
+  animation-duration: 15s; /* Faster-moving blobs */
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Blob Animation Duration */
+.animate-blob {
+  animation: blob 8s infinite;
+}

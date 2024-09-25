@@ -10,3 +10,48 @@
 .Mokoto{
     font-family: Mokoto;
 }
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: blobAnimation 8s infinite;
+  }
+
+  .blob-1 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #ff7eb3 0%, #ff65a3 70%, transparent 100%);
+    top: 10%;
+    left: 20%;
+    animation-delay: 0s;
+  }
+
+  .blob-2 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #7afcff 0%, #5ec2d1 70%, transparent 100%);
+    top: 40%;
+    right: 20%;
+    animation-delay: 2s;
+  }
+
+  .blob-3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #eab0ff 0%, #9d65c9 70%, transparent 100%);
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 4s;
+  }
+
+  @keyframes blobAnimation {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+  }
