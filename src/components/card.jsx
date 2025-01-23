@@ -36,7 +36,7 @@ export default function Blog() {
   const baseURL =
     window.location.hostname === "localhost"
       ? "http://localhost:8080"
-      : "https://payroyale-production.up.railway.app";
+      : "https://payroyale-backend.vercel.app";
 
    const frontendURL = window.location.hostname === 'localhost'
   ? 'http://localhost:5173'
