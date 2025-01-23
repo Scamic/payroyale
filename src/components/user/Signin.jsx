@@ -14,7 +14,7 @@ export default function SignIn() {
 
   const baseURL = window.location.hostname === 'localhost'
   ? 'http://localhost:8080'
-  : 'https://payroyale-production.up.railway.app';
+  : 'https://payroyale-backend.vercel.app';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
